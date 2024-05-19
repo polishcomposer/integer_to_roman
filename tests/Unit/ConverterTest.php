@@ -45,6 +45,14 @@ class ConverterTest extends TestCase
     /**
      * @test
      */
+    function cannot_convert_wrong_numerals_order()
+    {
+        $this->assertFalse(Converter::romanToInteger('XXC'));
+    }
+
+    /**
+     * @test
+     */
     function cannot_convert_a_integer()
     {
         $this->assertFalse(Converter::romanToInteger(198391));

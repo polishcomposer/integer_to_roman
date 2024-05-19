@@ -54,12 +54,23 @@ class Converter
         endif;
 
         $result = 0;
+        $values = [];
         while (!empty($string)):
             $length = 4;
             while ($length >= 1):
                 $key = substr($string, 0, $length);
                 if (array_key_exists($key, self::NUMERALS)):
-                    $result += self::NUMERALS[$key];
+                    $value = self::NUMERALS[$key];
+                    if (!empty($values)):
+                        $res = array_search(true, array_map(function ($v) use ($value) {
+                            return $v < $value;
+                        }, $values));
+                        if ($res !== false):
+                            return false;
+                        endif;
+                    endif;
+                    $result += $value;
+                    array_push($values, $value);
                     $string = substr($string, $length);
                     break;
                 endif;
