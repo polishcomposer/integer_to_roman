@@ -9,11 +9,13 @@ class Controller
 {
     public function convertInt(Request $request)
     {
-        return response()->json(['result' => Converter::integerToRoman(intval($request->input('int-to-roman')))]);
+        $integerValue = strip_tags($request->input('int-to-roman'));
+        return response()->json(['result' => Converter::integerToRoman(intval($integerValue))]);
     }
 
     public function convertRoman(Request $request)
     {
-        return response()->json(['result' => Converter::romanToInteger($request->input('roman-to-int'))]);
+        $romanNumerals = strip_tags($request->input('roman-to-int'));
+        return response()->json(['result' => Converter::romanToInteger($romanNumerals)]);
     }
 }
