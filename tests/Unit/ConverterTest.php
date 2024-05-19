@@ -14,7 +14,7 @@ class ConverterTest extends TestCase
      */
     function cannot_convert_a_string()
     {
-        $this->assertFalse(Converter::integerToRoman('MMMCMXCIX'));
+        $this->assertFalse(Converter::integerToRoman('XXDSere'));
     }
 
     /**

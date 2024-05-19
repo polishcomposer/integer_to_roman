@@ -63,6 +63,9 @@ class Converter
                     $string = substr($string, $length);
                     break;
                 endif;
+                if ($length === 1):
+                    return false;
+                endif;
                 $length--;
             endwhile;
         endwhile;
