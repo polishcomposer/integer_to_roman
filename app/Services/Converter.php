@@ -4,7 +4,15 @@ namespace App\Services;
 
 class Converter
 {
-    const NUMERALS  = [
+    const NUMERALS = [
+        '_C' => 100000,
+        '_X_C' => 90000,
+        '_L' => 50000,
+        '_X_L' => 40000,
+        '_X' => 10000,
+        'M_X' => 9000,
+        '_V' => 5000,
+        'M_V' => 4000,
         'M' => 1000,
         'CM' => 900,
         'D' => 500,
@@ -20,9 +28,10 @@ class Converter
         'I' => 1
     ];
 
-    public static function integerToRoman($number):string|false {
+    public static function integerToRoman($number): string|false
+    {
 
-        if (!is_int($number) || $number <= 0 || $number >= 4000):
+        if (!is_int($number) || $number <= 0 || $number > 100000):
             return false;
         endif;
 
@@ -33,6 +42,34 @@ class Converter
                 $result .= $numeral;
             endfor;
         endforeach;
+
+        return $result;
+    }
+
+    public static function romanToInteger($string): int|false
+    {
+
+        if (!is_string($string) || empty($string) || strlen($string) > 20):
+            return false;
+        endif;
+
+        $result = 0;
+        while (!empty($string)):
+            $length = 4;
+            while ($length >= 1):
+                $key = substr($string, 0, $length);
+                if (array_key_exists($key, self::NUMERALS)):
+                    $result += self::NUMERALS[$key];
+                    $string = substr($string, $length);
+                    break;
+                endif;
+                $length--;
+            endwhile;
+        endwhile;
+
+        if ($result === 0):
+            return false;
+        endif;
 
         return $result;
     }
